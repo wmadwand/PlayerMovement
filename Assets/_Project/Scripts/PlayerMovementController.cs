@@ -34,12 +34,21 @@ public class PlayerMovementController : MonoBehaviour
     bool exitingSlope = false;
     float airMultiplier = 1;
     RaycastHit slopeHit;
-    float maxSlopeAngle;
+    float maxSlopeAngle = 0;
+
+    Animator _animator;
+
+    [SerializeField] private string _animatorIsGrounded;
 
     public enum MovementState
     {
         walking,
         sprinting
+    }
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -62,7 +71,7 @@ public class PlayerMovementController : MonoBehaviour
         StateHandler();
 
         //handle drag
-        if(grounded) rb.drag = groundDrag;
+        if (grounded) rb.drag = groundDrag;
         else rb.drag = 0;
     }
 
@@ -80,17 +89,19 @@ public class PlayerMovementController : MonoBehaviour
     private void StateHandler()
     {
         //Mode - Sprinting
-        if(grounded && Input.GetKey(sprintKey))
+        if (grounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
         }
 
         //Mode - walking
-        else if(grounded)
+        else if (grounded)
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+
+            _animator.SetTrigger(_animatorIsGrounded);
         }
     }
 
@@ -98,24 +109,24 @@ public class PlayerMovementController : MonoBehaviour
     {
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        
+
         //on slope
-        if(OnSlope() && !exitingSlope)
+        if (OnSlope() && !exitingSlope)
         {
             rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
 
-            if(rb.velocity.y > 0)
+            if (rb.velocity.y > 0)
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
 
         //on ground
-        if(grounded)
+        if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
 
         //in air
-        else if(!grounded)
+        else if (!grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
@@ -128,9 +139,9 @@ public class PlayerMovementController : MonoBehaviour
     {
 
         //limit speed on slope
-        if(OnSlope() && !exitingSlope)
+        if (OnSlope() && !exitingSlope)
         {
-            if(rb.velocity.magnitude > moveSpeed)
+            if (rb.velocity.magnitude > moveSpeed)
                 rb.velocity = rb.velocity.normalized * moveSpeed;
         }
 
@@ -140,17 +151,17 @@ public class PlayerMovementController : MonoBehaviour
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
             //limit velocity if needed
-            if(flatVel.magnitude > moveSpeed)
+            if (flatVel.magnitude > moveSpeed)
             {
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
                 rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
             }
-        }     
+        }
     }
 
     private bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
