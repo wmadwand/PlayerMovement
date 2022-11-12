@@ -13,6 +13,7 @@ public class PlayerMovementController : MonoBehaviour
 
     [Header("Keybinds")]
     public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode jumpKey = KeyCode.Space;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -37,6 +38,11 @@ public class PlayerMovementController : MonoBehaviour
     float maxSlopeAngle = 0;
 
     Animator _animator;
+
+    public float rotationSpeed = 1;
+    public float jumpPower = 1;
+
+    public bool rotate;
 
     [SerializeField] private string _animatorIsGrounded;
 
@@ -78,6 +84,27 @@ public class PlayerMovementController : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+
+        if (rotate)
+        {
+            RotatePLayer();
+        }
+    }
+
+    private void RotatePLayer()
+    {
+        var startRot = rb.rotation;
+        var dir = new Vector3(horizontalInput, 0, verticalInput).normalized;
+
+        if (moveDirection.normalized == Vector3.zero)
+        {
+            return;
+        }
+        
+        var trgetRot = Quaternion.LookRotation(new Vector3(horizontalInput, 0, verticalInput).normalized, Vector3.up);
+        var resultRot = Quaternion.Slerp(startRot, trgetRot, rotationSpeed * Time.deltaTime);
+
+        rb.MoveRotation(resultRot);
     }
 
     private void MyInput()
@@ -103,6 +130,8 @@ public class PlayerMovementController : MonoBehaviour
 
             _animator.SetTrigger(_animatorIsGrounded);
         }
+
+
     }
 
     private void MovePlayer()
@@ -129,6 +158,11 @@ public class PlayerMovementController : MonoBehaviour
         else if (!grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        }
+
+        if (Input.GetKey(jumpKey) && grounded)
+        {
+            rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
         }
 
         //turn gravity off while on slope

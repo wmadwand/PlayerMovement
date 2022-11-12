@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4752731361449639766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6386877730894300778}
+  m_Layer: 0
+  m_Name: Direction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6386877730894300778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4752731361449639766}
+  m_LocalRotation: {x: 0, y: 0, z: -0, w: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6068472896380056699}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 360, z: 0}
 --- !u!1 &6068472895069105752
 GameObject:
   m_ObjectHideFlags: 0
@@ -2911,6 +2942,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6068472895069105753}
+  - {fileID: 6386877730894300778}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2979,11 +3011,15 @@ MonoBehaviour:
   sprintSpeed: 15
   groundDrag: 1
   sprintKey: 304
+  jumpKey: 32
   playerHeight: 0
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 1
   grounded: 0
-  orientation: {fileID: 6068472896380056699}
+  orientation: {fileID: 6386877730894300778}
   state: 0
+  rotationSpeed: 1
+  jumpPower: 100
+  rotate: 0
   _animatorIsGrounded: grounded
