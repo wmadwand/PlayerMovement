@@ -47,6 +47,7 @@ public class PlayerMovementController : MonoBehaviour
 
     [SerializeField] private string _animatorIsGrounded;
     [SerializeField] private string _animatorIsRolling;
+    [SerializeField] private string _animatorSpeed;
 
     public enum MovementState
     {
@@ -152,6 +153,8 @@ public class PlayerMovementController : MonoBehaviour
         if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+
+            _animator.SetFloat(_animatorSpeed, rb.velocity.magnitude);
         }
 
         //in air

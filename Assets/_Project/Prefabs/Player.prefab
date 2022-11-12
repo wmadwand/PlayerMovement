@@ -2985,7 +2985,7 @@ Animator:
   m_GameObject: {fileID: 6068472896380056698}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 52058499a402c8347ab3ae633f683d33, type: 3}
-  m_Controller: {fileID: 9100000, guid: 4a4b0479243aa544e9f75eefc0a23856, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2f56dbda161725d40bae151d9b13397b, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -3007,8 +3007,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0171e0c7e5ca74a838efc22ce27529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  sprintSpeed: 15
+  walkSpeed: 10
+  sprintSpeed: 20
   groundDrag: 1
   sprintKey: 304
   jumpKey: 32
@@ -3023,5 +3023,6 @@ MonoBehaviour:
   rotationSpeed: 1
   jumpPower: 2
   rotate: 0
-  _animatorIsGrounded: grounded
-  _animatorIsRolling: roll
+  _animatorIsGrounded: IsGrounded
+  _animatorIsRolling: Roll
+  _animatorSpeed: Speed
