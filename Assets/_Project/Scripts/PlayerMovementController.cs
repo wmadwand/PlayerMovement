@@ -14,6 +14,7 @@ public class PlayerMovementController : MonoBehaviour
     [Header("Keybinds")]
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode rollKey = KeyCode.LeftAlt;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -45,6 +46,7 @@ public class PlayerMovementController : MonoBehaviour
     public bool rotate;
 
     [SerializeField] private string _animatorIsGrounded;
+    [SerializeField] private string _animatorIsRolling;
 
     public enum MovementState
     {
@@ -130,8 +132,6 @@ public class PlayerMovementController : MonoBehaviour
 
             _animator.SetTrigger(_animatorIsGrounded);
         }
-
-
     }
 
     private void MovePlayer()
@@ -163,6 +163,11 @@ public class PlayerMovementController : MonoBehaviour
         if (Input.GetKey(jumpKey) && grounded)
         {
             rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+        }
+
+        if (Input.GetKey(rollKey) && grounded && rb.velocity.magnitude > 0)
+        {
+            _animator.SetTrigger(_animatorIsRolling);
         }
 
         //turn gravity off while on slope

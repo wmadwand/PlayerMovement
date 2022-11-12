@@ -3012,6 +3012,7 @@ MonoBehaviour:
   groundDrag: 1
   sprintKey: 304
   jumpKey: 32
+  rollKey: 308
   playerHeight: 0
   WhatIsGround:
     serializedVersion: 2
@@ -3020,6 +3021,7 @@ MonoBehaviour:
   orientation: {fileID: 6386877730894300778}
   state: 0
   rotationSpeed: 1
-  jumpPower: 100
+  jumpPower: 2
   rotate: 0
   _animatorIsGrounded: grounded
+  _animatorIsRolling: roll
