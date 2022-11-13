@@ -87,9 +87,10 @@ public class BasciInput : MonoBehaviour
             _animator.SetTrigger(_animatorJump);
         }
 
-        if (Input.GetKey(rollKey) && _rigidbody.velocity.magnitude > 0)
-        {            
+        if (Input.GetKeyDown(rollKey) && _rigidbody.velocity.magnitude > 0)
+        {
             _animator.SetTrigger(_animatorIsRolling);
+            Debug.Log("_animatorIsRolling");
         }
     }
 
