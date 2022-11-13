@@ -227,6 +227,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3927417143462375736, guid: b7112a52364af9943a343d89fabf8ae0, type: 3}
+      propertyPath: MoveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927417143462375736, guid: b7112a52364af9943a343d89fabf8ae0, type: 3}
+      propertyPath: SprintSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927417143462375736, guid: b7112a52364af9943a343d89fabf8ae0, type: 3}
+      propertyPath: SpeedChangeRate
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 6068472896380056698, guid: b7112a52364af9943a343d89fabf8ae0, type: 3}
       propertyPath: m_Name
       value: PlayerAdvanced

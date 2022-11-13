@@ -75,6 +75,13 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+        [Header("Animation")]
+        [SerializeField] private string _animIDGrounded;
+        [SerializeField] private string _animatorIsRolling;
+        [SerializeField] private string _animIDSpeed;
+        [SerializeField] private string _animIDJump;
+        [SerializeField] private string _animatorWalk;
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -92,11 +99,11 @@ namespace StarterAssets
         private float _fallTimeoutDelta;
 
         // animation IDs
-        private int _animIDSpeed;
-        private int _animIDGrounded;
-        private int _animIDJump;
-        private int _animIDFreeFall;
-        private int _animIDMotionSpeed;
+        //private int _animIDSpeed;
+        //private int _animIDGrounded;
+        //private int _animIDJump;
+        //private int _animIDFreeFall;
+        //private int _animIDMotionSpeed;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         private PlayerInput _playerInput;
@@ -117,7 +124,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
                 return _playerInput.currentControlScheme == "KeyboardMouse";
 #else
-				return false;
+                return false;
 #endif
             }
         }
@@ -135,15 +142,15 @@ namespace StarterAssets
         private void Start()
         {
             //_cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-//#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-//            _playerInput = GetComponent<PlayerInput>();
-//#else
-//			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
-//#endif
+            //#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+            //            _playerInput = GetComponent<PlayerInput>();
+            //#else
+            //			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
+            //#endif
 
             AssignAnimationIDs();
 
@@ -159,6 +166,11 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+
+            if (_input.roll && Grounded && _animationBlend > 0)
+            {
+                _animator.SetTrigger(_animatorIsRolling);
+            }
         }
 
         private void LateUpdate()
@@ -168,11 +180,11 @@ namespace StarterAssets
 
         private void AssignAnimationIDs()
         {
-            _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDGrounded = Animator.StringToHash("Grounded");
-            _animIDJump = Animator.StringToHash("Jump");
-            _animIDFreeFall = Animator.StringToHash("FreeFall");
-            _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            //_animIDSpeed = Animator.StringToHash("Speed");
+            //_animIDGrounded = Animator.StringToHash("Grounded");
+            //_animIDJump = Animator.StringToHash("Jump");
+            //_animIDFreeFall = Animator.StringToHash("FreeFall");
+            //_animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
         private void GroundedCheck()
@@ -275,7 +287,7 @@ namespace StarterAssets
             if (_hasAnimator)
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                //_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
         }
 
@@ -290,7 +302,7 @@ namespace StarterAssets
                 if (_hasAnimator)
                 {
                     _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
+                    //_animator.SetBool(_animIDFreeFall, false);
                 }
 
                 // stop our velocity dropping infinitely when grounded
@@ -333,7 +345,7 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDFreeFall, true);
+                        //_animator.SetBool(_animIDFreeFall, true);
                     }
                 }
 

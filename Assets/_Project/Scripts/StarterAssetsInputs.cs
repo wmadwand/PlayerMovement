@@ -58,9 +58,14 @@ namespace StarterAssets
             var direction = new Vector2(hor, ver).normalized;
             MoveInput(direction);
 
-            if (Input.GetKey(jumpKey)) { JumpInput(true); }
-            if (Input.GetKey(rollKey)) { RollInput(true); }
-            if (Input.GetKey(sprintKey)) { SprintInput(true); }
+
+            JumpInput(Input.GetKey(jumpKey));
+            RollInput(Input.GetKeyDown(rollKey));
+            SprintInput(Input.GetKey(sprintKey));
+
+            //if (Input.GetKey(jumpKey)) { JumpInput(true); }
+            //if (Input.GetKey(rollKey)) { RollInput(true); }
+            //if (Input.GetKey(sprintKey)) { SprintInput(true); }
         }
 
 
