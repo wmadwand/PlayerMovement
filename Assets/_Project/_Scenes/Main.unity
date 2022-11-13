@@ -1490,8 +1490,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b54a21d42003984380edcda1cccf5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
+  walkSpeed: 2
+  sprintSpeed: 4.5
   rotSpeed: 5
+  _animatorIsGrounded: IsGrounded
+  _animatorIsRolling: Roll
+  _animatorSpeed: Speed
+  _animatorWalk: Walk
+  sprintKey: 304
+  jumpKey: 32
+  rollKey: 308
+  playerHeight: 0
+  WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 1
+  grounded: 0
+  state: 0
 --- !u!1 &636527051
 GameObject:
   m_ObjectHideFlags: 0
