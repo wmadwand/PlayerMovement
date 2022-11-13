@@ -7,10 +7,12 @@ public class BasciInput : MonoBehaviour
     [SerializeField] private float walkSpeed = 5;
     [SerializeField] private float sprintSpeed = 5;
     [SerializeField] private float rotSpeed = 5;
+    [SerializeField] private float jumpPower = 5;
 
     [SerializeField] private string _animatorIsGrounded;
     [SerializeField] private string _animatorIsRolling;
     [SerializeField] private string _animatorSpeed;
+    [SerializeField] private string _animatorJump;
     [SerializeField] private string _animatorWalk;
 
     [Header("Keybinds")]
@@ -21,7 +23,7 @@ public class BasciInput : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask WhatIsGround;
-    public bool grounded;
+    public bool _isGrounded;
 
     public MovementState state;
 
@@ -50,9 +52,10 @@ public class BasciInput : MonoBehaviour
         _direction = new Vector3(-ver, 0, hor).normalized;
 
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, WhatIsGround);
+        _isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, WhatIsGround);
+        _animator.SetBool(_animatorIsGrounded, _isGrounded);
 
-        if (grounded)
+        if (_isGrounded)
         {
             _animator.SetTrigger(_animatorIsGrounded);
         }
@@ -63,25 +66,42 @@ public class BasciInput : MonoBehaviour
     private void StateHandler()
     {
         //Mode - Sprinting
-        if (grounded && Input.GetKey(sprintKey))
+        if (_isGrounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
             _moveSpeed = sprintSpeed;
         }
 
         //Mode - walking
-        else if (grounded)
+        else if (_isGrounded)
         {
             state = MovementState.walking;
             _moveSpeed = walkSpeed;
 
             _animator.SetTrigger(_animatorIsGrounded);
         }
+
+        if (Input.GetKey(jumpKey) && _isGrounded)
+        {
+            _rigidbody.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+            _animator.SetTrigger(_animatorJump);
+        }
+
+        if (Input.GetKey(rollKey) && _rigidbody.velocity.magnitude > 0)
+        {            
+            _animator.SetTrigger(_animatorIsRolling);
+        }
     }
 
     private void FixedUpdate()
     {
-        _rigidbody.velocity = _direction * _moveSpeed;
+        if (_isGrounded)
+        {
+            _rigidbody.velocity = _direction * _moveSpeed;
+
+            _animator.SetFloat(_animatorSpeed, _rigidbody.velocity.magnitude);
+        }
+
 
         if (_direction == Vector3.zero) { return; }
 

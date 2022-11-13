@@ -1493,9 +1493,11 @@ MonoBehaviour:
   walkSpeed: 2
   sprintSpeed: 4.5
   rotSpeed: 5
+  jumpPower: 1.5
   _animatorIsGrounded: IsGrounded
   _animatorIsRolling: Roll
   _animatorSpeed: Speed
+  _animatorJump: Jump
   _animatorWalk: Walk
   sprintKey: 304
   jumpKey: 32
@@ -1504,7 +1506,7 @@ MonoBehaviour:
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 1
-  grounded: 0
+  _isGrounded: 0
   state: 0
 --- !u!1 &636527051
 GameObject:
@@ -4020,6 +4022,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6068472896380056696, guid: 4eaddb6054af47d4ba812066dec4b207, type: 3}
+      propertyPath: jumpPower
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6068472896380056696, guid: 4eaddb6054af47d4ba812066dec4b207, type: 3}
       propertyPath: m_Enabled
       value: 0
